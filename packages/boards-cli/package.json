@@ -1,0 +1,51 @@
+{
+  "name": "@saliagadotcom/boards-cli",
+  "version": "0.2.0",
+  "description": "Distributed, git-backed graph issue tracker for AI agents",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saliagadotcom/boards.git",
+    "directory": "packages/boards-cli"
+  },
+  "keywords": [
+    "issue-tracker",
+    "cli",
+    "ai-agents",
+    "git"
+  ],
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "bin": {
+    "bd": "./bin/bd.ts"
+  },
+  "files": [
+    "bin/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "bun build --compile ./bin/bd.ts --outfile ../../dist/bd --minify"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "dependencies": {
+    "@saliagadotcom/boards-core": "workspace:*",
+    "@saliagadotcom/boards-tui": "workspace:*",
+    "@saliagadotcom/boards-client": "workspace:*",
+    "@commander-js/extra-typings": "^14.0.0",
+    "commander": "^14.0.0",
+    "kysely": "^0.27.6"
+  },
+  "devDependencies": {
+    "@saliagadotcom/boards-server": "workspace:*"
+  },
+  "optionalDependencies": {
+    "react-devtools-core": "^7.0.1"
+  }
+}

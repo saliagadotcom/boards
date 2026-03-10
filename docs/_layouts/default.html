@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} — {{ site.title }}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: #24292e; line-height: 1.5; }
+    .site-header { background: #24292e; color: #fff; padding: 12px 24px; }
+    .site-header a { color: #fff; text-decoration: none; font-weight: 600; font-size: 18px; }
+    .site-header span { color: #959da5; font-weight: 400; margin-left: 8px; font-size: 14px; }
+    .wrapper { display: flex; max-width: 1200px; margin: 0 auto; }
+    .sidebar { width: 220px; padding: 24px 16px; border-right: 1px solid #e1e4e8; flex-shrink: 0; }
+    .sidebar h3 { font-size: 12px; text-transform: uppercase; color: #6a737d; margin: 16px 0 4px; letter-spacing: 0.5px; }
+    .sidebar h3:first-child { margin-top: 0; }
+    .sidebar ul { list-style: none; }
+    .sidebar li { margin: 2px 0; }
+    .sidebar a { color: #0366d6; text-decoration: none; font-size: 14px; display: block; padding: 2px 0; }
+    .sidebar a:hover { text-decoration: underline; }
+    .content { flex: 1; padding: 24px 32px; min-width: 0; }
+    .content h1 { border-bottom: 1px solid #e1e4e8; padding-bottom: 8px; margin-bottom: 16px; }
+    .content h2 { margin-top: 24px; margin-bottom: 8px; }
+    .content h3 { margin-top: 16px; margin-bottom: 8px; }
+    .content p { margin-bottom: 12px; }
+    .content pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; margin-bottom: 12px; }
+    .content code { font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; font-size: 85%; }
+    .content pre code { font-size: 85%; }
+    .content :not(pre) > code { background: #f6f8fa; padding: 2px 6px; border-radius: 3px; }
+    .content table { border-collapse: collapse; margin-bottom: 12px; width: 100%; }
+    .content th, .content td { border: 1px solid #e1e4e8; padding: 6px 12px; text-align: left; }
+    .content th { background: #f6f8fa; }
+    .content hr { border: none; border-top: 1px solid #e1e4e8; margin: 24px 0; }
+    .content ul, .content ol { margin-bottom: 12px; padding-left: 24px; }
+    .content blockquote { border-left: 4px solid #dfe2e5; padding: 0 16px; color: #6a737d; margin-bottom: 12px; }
+    @media (max-width: 768px) {
+      .wrapper { flex-direction: column; }
+      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e1e4e8; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-header">
+    <a href="{{ site.baseurl }}/">{{ site.title }}</a>
+    <span>{{ site.description }}</span>
+  </div>
+  <div class="wrapper">
+    <nav class="sidebar">
+      <h3>Overview</h3>
+      <ul>
+        <li><a href="{{ site.baseurl }}/">Home</a></li>
+      </ul>
+      <h3>CLI</h3>
+      <ul>
+        <li><a href="{{ site.baseurl }}/cli/">CLI Overview</a></li>
+        <li><a href="{{ site.baseurl }}/cli/commands">Commands</a></li>
+        <li><a href="{{ site.baseurl }}/cli/configuration">Configuration</a></li>
+      </ul>
+      <h3>API</h3>
+      <ul>
+        <li><a href="{{ site.baseurl }}/api/">API Overview</a></li>
+        <li><a href="{{ site.baseurl }}/api/endpoints">Endpoints</a></li>
+        <li><a href="{{ site.baseurl }}/api/errors">Errors</a></li>
+      </ul>
+    </nav>
+    <main class="content">
+      {{ content }}
+    </main>
+  </div>
+</body>
+</html>

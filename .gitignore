@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+.DS_Store
+.perles
+.boards
+.claude
+.agents
+skills-lock.json
+.cursor
+specs/

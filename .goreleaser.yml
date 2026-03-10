@@ -1,0 +1,63 @@
+version: 2
+
+project_name: bd
+
+builds:
+  - id: bd
+    builder: bun
+    binary: bd
+    main: packages/boards-cli/bin/bd.ts
+    targets:
+      - darwin-arm64
+      - linux-arm64
+      - linux-x64-modern
+    flags:
+      - --compile
+      - --minify
+
+archives:
+  - id: default
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  use: git
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "Merge pull request"
+      - "Merge branch"
+  groups:
+    - title: Features
+      regexp: "^.*feat.*:+.*$"
+      order: 0
+    - title: Bug Fixes
+      regexp: "^.*fix.*:+.*$"
+      order: 1
+    - title: Other
+      order: 999
+
+release:
+  github:
+    owner: saliagadotcom
+    name: boards
+  draft: false
+  prerelease: auto
+  mode: replace
+  header: |
+    ## Boards {{ .Version }}
+
+    A local-first issue tracker built with TypeScript and Bun. Stores everything in SQLite.
+  footer: |
+    **Full Changelog**: https://github.com/saliagadotcom/boards/compare/{{ .PreviousTag }}...{{ .Tag }}

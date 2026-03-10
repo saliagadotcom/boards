@@ -1,0 +1,14 @@
+services:
+  boards-server:
+    build:
+      context: .
+      dockerfile: packages/boards-server/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - BOARDS_DB=/data/boards.db
+    volumes:
+      - boards-data:/data
+
+volumes:
+  boards-data:

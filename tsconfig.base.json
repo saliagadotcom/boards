@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@boards/core": ["./packages/boards-core/src/index.ts"],
+      "@boards/server": ["./packages/boards-server/src/index.ts"],
+      "@boards/client": ["./packages/boards-client/src/index.ts"],
+      "@boards/cli": ["./packages/boards-cli/src/index.ts"],
+      "@boards/gui": ["./packages/boards-gui/src/main/app.ts"],
+      "@boards/tui": ["./packages/boards-tui/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

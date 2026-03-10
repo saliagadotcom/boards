@@ -1,0 +1,108 @@
+{
+  "spec_version": "1.0.0",
+  "suite": "cycle-detection",
+  "description": "Verifies that implementations correctly detect and reject circular blocks-type dependencies",
+  "scenarios": [
+    {
+      "name": "direct cycle between two issues",
+      "description": "A blocks B, then B blocks A should be rejected",
+      "setup": [
+        {"action": "create_board", "args": {"name": "test", "prefix": "t"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-aaa", "title": "Issue A"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-bbb", "title": "Issue B"}},
+        {"action": "add_dependency", "args": {"from": "t-aaa", "to": "t-bbb", "type": "blocks"}}
+      ],
+      "test_action": {"action": "add_dependency", "args": {"from": "t-bbb", "to": "t-aaa", "type": "blocks"}},
+      "expected": {"result": "error", "error_code": "circular_dependency"}
+    },
+    {
+      "name": "indirect cycle through three issues",
+      "description": "A blocks B, B blocks C, then C blocks A should be rejected",
+      "setup": [
+        {"action": "create_board", "args": {"name": "test", "prefix": "t"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-aaa", "title": "Issue A"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-bbb", "title": "Issue B"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-ccc", "title": "Issue C"}},
+        {"action": "add_dependency", "args": {"from": "t-aaa", "to": "t-bbb", "type": "blocks"}},
+        {"action": "add_dependency", "args": {"from": "t-bbb", "to": "t-ccc", "type": "blocks"}}
+      ],
+      "test_action": {"action": "add_dependency", "args": {"from": "t-ccc", "to": "t-aaa", "type": "blocks"}},
+      "expected": {"result": "error", "error_code": "circular_dependency"}
+    },
+    {
+      "name": "self-dependency rejected",
+      "description": "An issue cannot depend on itself",
+      "setup": [
+        {"action": "create_board", "args": {"name": "test", "prefix": "t"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-aaa", "title": "Issue A"}}
+      ],
+      "test_action": {"action": "add_dependency", "args": {"from": "t-aaa", "to": "t-aaa", "type": "blocks"}},
+      "expected": {"result": "error", "error_code": "self_dependency"}
+    },
+    {
+      "name": "non-blocking dependency types may form cycles",
+      "description": "related-type dependencies do not trigger cycle detection",
+      "setup": [
+        {"action": "create_board", "args": {"name": "test", "prefix": "t"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-aaa", "title": "Issue A"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-bbb", "title": "Issue B"}},
+        {"action": "add_dependency", "args": {"from": "t-aaa", "to": "t-bbb", "type": "related"}}
+      ],
+      "test_action": {"action": "add_dependency", "args": {"from": "t-bbb", "to": "t-aaa", "type": "related"}},
+      "expected": {"result": "success"}
+    },
+    {
+      "name": "parent-child dependency type may form cycles",
+      "description": "parent-child dependencies do not trigger cycle detection",
+      "setup": [
+        {"action": "create_board", "args": {"name": "test", "prefix": "t"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-aaa", "title": "Issue A"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-bbb", "title": "Issue B"}},
+        {"action": "add_dependency", "args": {"from": "t-aaa", "to": "t-bbb", "type": "parent-child"}}
+      ],
+      "test_action": {"action": "add_dependency", "args": {"from": "t-bbb", "to": "t-aaa", "type": "parent-child"}},
+      "expected": {"result": "success"}
+    },
+    {
+      "name": "blocks cycle not detected through non-blocking edges",
+      "description": "A blocks B, B related C, C blocks A should succeed because the related edge breaks the blocks chain",
+      "setup": [
+        {"action": "create_board", "args": {"name": "test", "prefix": "t"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-aaa", "title": "Issue A"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-bbb", "title": "Issue B"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-ccc", "title": "Issue C"}},
+        {"action": "add_dependency", "args": {"from": "t-aaa", "to": "t-bbb", "type": "blocks"}},
+        {"action": "add_dependency", "args": {"from": "t-bbb", "to": "t-ccc", "type": "related"}}
+      ],
+      "test_action": {"action": "add_dependency", "args": {"from": "t-ccc", "to": "t-aaa", "type": "blocks"}},
+      "expected": {"result": "success"}
+    },
+    {
+      "name": "valid chain with no cycle",
+      "description": "A blocks B, B blocks C, C blocks D is a valid chain",
+      "setup": [
+        {"action": "create_board", "args": {"name": "test", "prefix": "t"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-aaa", "title": "Issue A"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-bbb", "title": "Issue B"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-ccc", "title": "Issue C"}},
+        {"action": "create_issue", "args": {"board": "test", "id": "t-ddd", "title": "Issue D"}},
+        {"action": "add_dependency", "args": {"from": "t-aaa", "to": "t-bbb", "type": "blocks"}},
+        {"action": "add_dependency", "args": {"from": "t-bbb", "to": "t-ccc", "type": "blocks"}}
+      ],
+      "test_action": {"action": "add_dependency", "args": {"from": "t-ccc", "to": "t-ddd", "type": "blocks"}},
+      "expected": {"result": "success"}
+    },
+    {
+      "name": "cross-board dependency rejected",
+      "description": "Dependencies between issues on different boards are not allowed",
+      "setup": [
+        {"action": "create_board", "args": {"name": "api", "prefix": "api"}},
+        {"action": "create_board", "args": {"name": "web", "prefix": "web"}},
+        {"action": "create_issue", "args": {"board": "api", "id": "api-aaa", "title": "API Issue"}},
+        {"action": "create_issue", "args": {"board": "web", "id": "web-bbb", "title": "Web Issue"}}
+      ],
+      "test_action": {"action": "add_dependency", "args": {"from": "api-aaa", "to": "web-bbb", "type": "blocks"}},
+      "expected": {"result": "error", "error_code": "cross_board"}
+    }
+  ]
+}
