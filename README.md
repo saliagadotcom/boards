@@ -14,11 +14,20 @@ A local-first issue tracker built with TypeScript and Bun. Stores everything in 
 
 ## Install
 
+### Homebrew (macOS/Linux)
+
+```bash
+brew tap saliagadotcom/boards
+brew install bd
+```
+
+### Install Script
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/saliagadotcom/boards/main/scripts/install.sh | bash
 ```
 
-Or build from source:
+### Build from Source
 
 ```bash
 bun install
