@@ -62,18 +62,20 @@ release:
   footer: |
     **Full Changelog**: https://github.com/saliagadotcom/boards/compare/{{ .PreviousTag }}...{{ .Tag }}
 
-brews:
+homebrew_casks:
   - name: bd
     repository:
       owner: saliagadotcom
       name: homebrew-boards
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
     commit_msg_template: "Update {{ .ProjectName }} to {{ .Tag }}"
-    directory: Formula
     homepage: "https://github.com/saliagadotcom/boards"
     description: "A local-first issue tracker built with TypeScript and Bun. Stores everything in SQLite."
-    license: "MIT"
-    install: |
-      bin.install "bd"
-    test: |
-      system "#{bin}/bd", "--version"
+    binaries:
+      - bd
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/bd"]
+          end

@@ -1,6 +1,6 @@
 {
   "name": "@saliagadotcom/boards-cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Distributed, git-backed graph issue tracker for AI agents",
   "type": "module",
   "license": "MIT",

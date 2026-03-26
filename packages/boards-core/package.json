@@ -1,6 +1,6 @@
 {
   "name": "@saliagadotcom/boards-core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Dialect-agnostic domain layer for the boards issue tracker",
   "type": "module",
   "license": "MIT",
