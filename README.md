@@ -18,7 +18,7 @@ A local-first issue tracker built with TypeScript and Bun. Stores everything in 
 
 ```bash
 brew tap saliagadotcom/boards
-brew install bd
+brew install --cask saliagadotcom/boards/bd
 ```
 
 ### Install Script
