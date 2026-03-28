@@ -32,3 +32,14 @@ All errors use `BoardsError` with a typed `ErrorCode`. JSON error shape is `{ er
 
 - See `packages/boards-core/src/errors.ts` for error codes and the `BoardsError` class
 - See `packages/boards-server/src/errors.ts` for HTTP status mapping
+
+## Effect Best Practices
+
+This codebase is migrating to Effect v4. Use `effect-solutions show <topic>` and search `~/.local/share/effect-solutions/effect` for real implementations before writing Effect code. Key conventions:
+
+- Use `Schema.Class` for domain types (Board, Issue, Comment) — single source of truth for validation and serialization
+- Use `Schema.TaggedErrorClass` for typed errors — one per error code, tracked in the `E` channel
+- Use `ServiceMap.Service` for the store contract — enables swappable layers (SQLite, HTTP, test)
+- Wrap Kysely calls in `Effect.tryPromise` — map SQLite errors to domain errors
+- Use `Layer.scoped` for database lifecycle — `addFinalizer` for cleanup
+- See `SPEC-effect-migration.md` for the full migration specification and architecture

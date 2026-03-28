@@ -5,9 +5,14 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "bun run --filter '@saliagadotcom/boards-cli' build"
+    "build": "bun run --filter '@saliagadotcom/boards-cli' build",
+    "prepare": "effect-language-service patch"
   },
   "devDependencies": {
+    "@effect/language-service": "^0.84.2",
+    "@effect/platform-bun": "4.0.0-beta.42",
+    "@effect/vitest": "4.0.0-beta.42",
+    "effect": "4.0.0-beta.42",
     "typescript": "^5.8.2"
   }
 }

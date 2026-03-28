@@ -6,6 +6,8 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
+    "noUnusedLocals": true,
+    "noImplicitOverride": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "declaration": true,
@@ -17,6 +19,9 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
+    "plugins": [
+      { "name": "@effect/language-service" }
+    ],
     "paths": {
       "@boards/core": ["./packages/boards-core/src/index.ts"],
       "@boards/server": ["./packages/boards-server/src/index.ts"],

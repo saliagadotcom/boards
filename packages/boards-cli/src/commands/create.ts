@@ -6,7 +6,6 @@ import { resolveStore } from '../resolve-store.js';
 import type { CreateIssueInput } from '@saliagadotcom/boards-core';
 import { resolveConfig } from '../config.js';
 import { jsonOutput, jsonError } from '../json.js';
-import { formatIssue } from '../format.js';
 
 export const createCommand = new Command('create')
   .description('Create a new issue')
